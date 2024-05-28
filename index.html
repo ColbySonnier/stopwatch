@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Colby First Page</title>
+</head>
+
+<body>
+    <style>
+
+        .timer{
+            background-color: blue;
+            height: 200px;
+            border: 2px solid black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+        }
+        #time{
+            font-size: 50px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+        }
+    </style>
+    <div class="timer">
+        <div id="time">
+            <div id='hours'>0</div>:<div id='minutes'>0</div>:<div id="seconds">0</div>
+        </div>
+
+        <div class="buttons">
+            <button id="start">Start</button>
+            <button id="stop">Stop</button>
+            <button id="reset">Reset</button>
+        </div>
+    </div>
+
+    
+
+    <script>
+        let timer;
+        let isRunning = false;
+        let totalSeconds = 0;
+        let totalMinutes = 0;
+        let totalHours = 0;
+
+        let timeDisplay = document.getElementById('time');
+        let seconds = document.querySelector('#seconds');
+        let minutes = document.querySelector('#minutes');  
+        let hours = document.querySelector('#hours');      
+        const startButton = document.getElementById('start');
+        const stopButton = document.getElementById('stop');
+        const resetButton = document.getElementById('reset');
+
+        startButton.addEventListener('click', function(){
+            if (!isRunning){
+                isRunning=true;
+                timer = setInterval(() => {
+                    console.log(totalSeconds);
+                    totalSeconds++;
+                    // Calculation and DOM manipulation to display time on the timer on the screen.
+                    
+                    if (totalSeconds==60){
+                        totalMinutes++
+                        minutes.innerText=totalMinutes
+                        totalSeconds=0
+                    }
+
+                    if (totalMinutes==60){
+                        totalHours++
+                        totalMinutes++
+                        hours.innerText=totalHours
+                        totalSeconds=0
+                        totalMinutes=0
+                    }
+
+                    minutes.innerText=totalMinutes
+                    seconds.innerText=totalSeconds
+                }, 1000);
+            }
+        })
+
+        stopButton.addEventListener('click', function () {
+            if (isRunning){
+                isRunning=false;
+                clearInterval(timer);
+            }
+            
+        })
+
+        resetButton.addEventListener('click', function () {
+            if (isRunning){
+                isRunning=false;
+                clearInterval(timer);
+            }
+            totalSeconds=0;
+            // update the displayed time back to 00:00:00
+            seconds.innerText=0
+            minutes.innerText=0
+            hours.innerText=0
+        })
+    </script>
+</body>
+
+</html>
